@@ -1,6 +1,6 @@
 # PERSONA / Peedy-1993
 
-A playable browser companion inspired by the 1990s Persona research project. The original mascot in this implementation is **Pip**: an independent green parrot character. This is a contemporary interpretation, not recovered Microsoft source, and is not affiliated with or endorsed by Microsoft.
+A playable browser companion inspired by the 1990s Persona research project. The companion uses **Peedy**, with the unchanged archival image from Microsoft Persona’s CHI ’95 demo, preserved by developer David Kurlander. This is a contemporary interpretation, not recovered Microsoft source, and is not affiliated with or endorsed by Microsoft.
 
 ## Run locally
 
@@ -17,7 +17,7 @@ npm run check
 
 ## Working features
 
-- Original generated transparent 3D parrot artwork; animated pet, snack, boop, and original synthesized music interactions.
+- Original Peedy archival portrait, with its background and pixels preserved; snack, boop, and original synthesized music interactions.
 - Clearly labeled Classic mode with authored responses, available immediately without a download.
 - Optional **real browser-local AI**: WebLLM 0.2.85 and Llama 3.2 1B. Explicit activation downloads roughly 1 GB of model assets, cached by the browser. WebGPU-capable desktop Chrome/Edge and sufficient graphics memory are required. Actual size and speed depend on the model cache and device.
 - Worker-based model loading and streamed replies; progress, cancellation, errors, and a stop-generation control.
@@ -41,7 +41,7 @@ The small local model can hallucinate. It has no live web access or tools and ca
 - `dist/app.js`: UI, local state, audio, WebMCP, AI-worker lifecycle.
 - `dist/companion.js`: state validation, explicit memory, classic dialogue, AI instructions.
 - `dist/ai-worker.js`: version-pinned WebLLM adapter.
-- `dist/assets/pip.png`: original generated artwork.
+- `dist/assets/peedy-original.jpg`: unchanged 260×260 CHI ’95 Peedy portrait. See `ASSET_CREDITS.md` for provenance.
 - `tests/companion.test.mjs`: memory, state corruption, capability-boundary checks.
 - `.openai/hosting.json`: Sites identity and static-directory configuration.
 
@@ -53,4 +53,4 @@ The small local model can hallucinate. It has no live web access or tools and ca
 - [WebLLM documentation](https://webllm.mlc.ai/docs/user/get_started.html)
 - [Llama model](https://huggingface.co/mlc-ai/Llama-3.2-1B-Instruct-q4f32_1-MLC)
 
-WebLLM and model weights retain their respective licenses. No third-party model weights or Microsoft character assets are included in this repository.
+WebLLM and model weights retain their respective licenses. No third-party model weights are included. The archival Peedy image is a Microsoft character asset; it is not original artwork created for this project. See `ASSET_CREDITS.md`.

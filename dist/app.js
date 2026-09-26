@@ -34,12 +34,12 @@ function interact(action) {
 }
 function addMessage(role, content, mode='classic') {
   const entry=document.createElement('div');entry.className=`message ${role}`;
-  const label=document.createElement('span');label.className='message-label';label.textContent=role==='assistant'?`PIP / ${mode==='ai'?'LOCAL AI':mode==='saved'?'SAVED CHAT':mode==='memory'?'MEMORY':'CLASSIC'}`:'YOU';
+  const label=document.createElement('span');label.className='message-label';label.textContent=role==='assistant'?`PEEDY / ${mode==='ai'?'LOCAL AI':mode==='saved'?'SAVED CHAT':mode==='memory'?'MEMORY':'CLASSIC'}`:'YOU';
   const p=document.createElement('p');p.className='message-content';p.textContent=content;
   entry.append(label,p);log.append(entry);log.scrollTop=log.scrollHeight;
   return {entry,text:p};
 }
-function greeting() { addMessage('assistant',`Oh! A human. Hi${state.name?', '+state.name:', new friend'}!\n\nI’m Pip. Part parrot, part internet time capsule. I’ve got a soft spot for good company and an unreasonable appetite for snacks.\n\n${state.name?'Good to see you again. What’s on your mind?':'What should I call you?'}`); }
+function greeting() { addMessage('assistant',`Oh! A human. Hi${state.name?', '+state.name:', new friend'}!\n\nI’m Peedy. Part parrot, part internet time capsule. I’ve got a soft spot for good company and an unreasonable appetite for snacks.\n\n${state.name?'Good to see you again. What’s on your mind?':'What should I call you?'}`); }
 function speak(text) {
   if(!state.voice || !('speechSynthesis' in window))return;
   speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.rate=1.03;utterance.pitch=1.2;
@@ -62,7 +62,7 @@ async function submitMessage(value) {
   const memoryReply=remember(text,state);
   if(memoryReply){save();addMessage('assistant',memoryReply,'memory');persistTurn('assistant',memoryReply);bubble('Filed under: things that matter.');speak(memoryReply);return memoryReply;}
   if(!aiReady){const reply=classicReply(text,state);addMessage('assistant',reply);persistTurn('assistant',reply);speak(reply);return reply;}
-  setBusy(true);const message=addMessage('assistant','Pip is thinking…','ai');message.entry.classList.add('pending');pose('talking');
+  setBusy(true);const message=addMessage('assistant','Peedy is thinking…','ai');message.entry.classList.add('pending');pose('talking');
   const id=nextId++;activeRequest=id;let combined='';
   try {
     await new Promise((resolve,reject)=>{
@@ -98,7 +98,7 @@ async function enableAI() {
     worker.onmessage=({data})=>{
       if(data.type==='progress'){$('#ai-progress').value=Math.round(Math.max(0,Math.min(1,data.progress))*100);$('#ai-progress-text').textContent=data.text;}
       if(data.type==='ready'){
-        clearTimeout(loadTimer);aiReady=true;aiLoading=false;$('#ai-progress').value=100;$('#ai-progress-text').textContent='Pip’s local AI is ready.';$('#download-ai').disabled=false;$('#download-ai').textContent='Switch to Classic mode';$('#cancel-ai').hidden=true;setMode();$('#ai-dialog').close();bubble('A few more brain cells. Same little bird.');notify('Local AI is ready. Say something to Pip!');
+        clearTimeout(loadTimer);aiReady=true;aiLoading=false;$('#ai-progress').value=100;$('#ai-progress-text').textContent='Peedy’s local AI is ready.';$('#download-ai').disabled=false;$('#download-ai').textContent='Switch to Classic mode';$('#cancel-ai').hidden=true;setMode();$('#ai-dialog').close();bubble('A few more brain cells. Same little bird.');notify('Local AI is ready. Say something to Peedy!');
       }
       if(data.type==='error'){
         if(aiLoading){resetWorker();showAIError('Could not load the model. '+String(data.message).slice(0,240));}
@@ -136,7 +136,7 @@ async function toggleMusic() {
 }
 function dictate() {
   const Speech=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!Speech){notify('Voice input is unavailable in this browser. You can still type to Pip.');return;}
+  if(!Speech){notify('Voice input is unavailable in this browser. You can still type to Peedy.');return;}
   if(recognition){recognition.stop();return;}
   recognition=new Speech();recognition.lang=navigator.language||'en-US';recognition.interimResults=false;recognition.continuous=false;
   recognition.onstart=()=>{$('#mic-button').classList.add('listening');$('#mic-button').setAttribute('aria-label','Stop dictation');notify('Listening. Your browser’s speech service processes the audio.');};
@@ -173,7 +173,7 @@ if(context?.registerTool){
   const lifecycle=new AbortController();window.addEventListener('pagehide',()=>lifecycle.abort(),{once:true});
   const tools=[
     {name:'persona_get_status',title:'Read companion status',description:'Read companion mode, personality, and interaction counts. Does not expose chat or memories.',inputSchema:{type:'object',properties:{},additionalProperties:false},annotations:{readOnlyHint:true,untrustedContentHint:false},execute:input=>{if(!input||typeof input!=='object'||Object.keys(input).length)throw new Error('Expected an empty object.');return{mode:aiReady?'local-ai':aiLoading?'loading':'classic',personality:state.personality,interactions:state.interactions,snacks:state.snacks};}},
-    {name:'persona_interact',title:'Play with Pip',description:'Give Pip a snack or boop him. Updates the character and this device’s interaction count.',inputSchema:{type:'object',properties:{action:{type:'string',enum:['snack','boop']}},required:['action'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute:input=>{if(!input||!['snack','boop'].includes(input.action)||Object.keys(input).some(k=>k!=='action'))throw new Error('Use action snack or boop.');return interact(input.action);}},
+    {name:'persona_interact',title:'Play with Peedy',description:'Give Peedy a snack or boop him. Updates the character and this device’s interaction count.',inputSchema:{type:'object',properties:{action:{type:'string',enum:['snack','boop']}},required:['action'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute:input=>{if(!input||!['snack','boop'].includes(input.action)||Object.keys(input).some(k=>k!=='action'))throw new Error('Use action snack or boop.');return interact(input.action);}},
   ];
   for(const tool of tools){try{Promise.resolve(context.registerTool(tool,{signal:lifecycle.signal})).catch(()=>{});}catch{}}
 }
