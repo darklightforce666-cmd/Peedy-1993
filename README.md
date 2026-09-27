@@ -1,4 +1,4 @@
-# PERSONA / Peedy-1993
+# Peedy
 
 A playable browser companion inspired by the 1990s Persona research project. The companion uses **Peedy**, with the unchanged archival image from Microsoft Persona’s CHI ’95 demo, preserved by developer David Kurlander. This is a contemporary interpretation, not recovered Microsoft source, and is not affiliated with or endorsed by Microsoft.
 
@@ -33,7 +33,7 @@ The small local model can hallucinate. It has no live web access or tools and ca
 
 ## Community / token configuration
 
-`$PERSONA` is only a working community identity. **No token, blockchain, contract address, launch date, market data, wallet transactions, or social account is configured.** The interface states this openly. Edit the community panel once verified details exist. Nothing here mints, sells, buys, or signs for a token.
+`$PEEDY` is only a working community identity. **No token, blockchain, contract address, launch date, market data, wallet transactions, or social account is configured.** The interface states this openly. Edit the community panel once verified details exist. Nothing here mints, sells, buys, or signs for a token.
 
 ## Files
 
